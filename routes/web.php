@@ -4,8 +4,10 @@ use App\Http\Requests\TaskRequest;
 use \App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response as ResponseAlias;
+use GuzzleHttp\Client;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,10 +27,29 @@ Route::get('/',function (){
 });
 
 //Routing to Index page
+
 Route::get('/tasks', function (){
+
     $tasks = Task::latest()->paginate(10);
     return view('index',['tasks'=>$tasks]);
 })->name('tasks.index');
+
+
+
+
+//Route::get('/tasks', function () {
+//
+//    $response = Http::get('/api/tasks');
+//
+//    dd($response->json());
+//    //$response = $client->request('GET', 'tasks');
+//    $tasks = json_decode($response->getBody()->getContents(), true)['data'];
+//    dd($tasks);
+//
+//    //return view('index', ['tasks' => $tasks]);
+//})->name('tasks.index');
+
+
 
 
 //Routing to create page
